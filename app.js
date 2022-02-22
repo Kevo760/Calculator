@@ -10,28 +10,65 @@ let firstNum = "";
 let secondNum = "";
 let operator = "";
 let result = "";
+let negNum = "";
 
 
-// if result is not empty, let first number value be result
-function resultValid() {
-    if(result !== '') {
-        firstNum = result
+// formula
+function calculate() {
+    if(operator === "+") {
+       result = parseFloat(firstNum) + parseFloat(secondNum);
+       result = Number.parseFloat(result).toFixed(2);
+       resultText.innerHTML = result;
+    } else if (operator === "-") {
+        result = parseFloat(firstNum) - parseFloat(secondNum);
+        result = Number.parseFloat(result).toFixed(2);
+        resultText.innerHTML = result;
+    } else if (operator === "/") {
+        result = parseFloat(firstNum) / parseFloat(secondNum);
+        result = Number.parseFloat(result).toFixed(2);
+        // if divided by second num display this error
+        if(secondNum == 0) {
+            result = "I'm broken :(";
+        };
+        resultText.innerHTML = result;
+    } else if (operator === "*") {
+        result = parseFloat(firstNum) * parseFloat(secondNum);
+        result = Number.parseFloat(result).toFixed(2);
+        resultText.innerHTML = result;
     } else {
-        result = '';
+        return
     }
+
+    console.log(firstNum, operator, secondNum, result)
 };
+
 
 
 // Gives numbers that is clicked a value
 numbers.forEach(number => {
     number.addEventListener('click', function() {
-        // if operator is empty and clicking an operator 
-        if(operator === '' || operator !== '' && firstNum === '') {
+        
+        // if operator is empty and first num is empty let num selected be first num
+        if(operator === '' && firstNum === '') {
             firstNum += this.value;
+            // if negNum is - add it to first num
+            if(negNum == '-') {
+                firstNum = negNum + firstNum;
+            };
             resultText.innerHTML = firstNum;
-        } else {
+
+            // if there is an operator and result is empty let secondNum be selected num
+        } else if (operator !== '' && result == '') {
             secondNum += this.value;
             resultText.innerHTML = secondNum
+            // if result is not empty, let result be first num and second num this value
+        } else {
+            negNum = '';
+            firstNum = '';
+            secondNum = '';
+            firstNum = result;
+            secondNum += this.value;
+            resultText.innerHTML = secondNum;
         };
     });
 });
@@ -40,30 +77,31 @@ numbers.forEach(number => {
 //Gives operator a value when clicked
 operators.forEach(operatorSel => {
     operatorSel.addEventListener('click', function() {
-        operator = this.value;
-        resultText.innerHTML = operator;
+        // If user clicks - gives negNum = "-" value
+        if(firstNum == '' && this.value == "-") {
+            negNum = "-";
+            operator = '';
+            resultText.innerHTML = "-";
+        // If operator is clicked let operator be nothing
+        } else if (firstNum == '') {
+            operator = '';
+        // If operator is not empty calculate when clicking on operator
+        // then empty operator and replace operator with clicked operator
+        } else if (operator !== '') {
+            calculate();
+            let operator = '';
+            operator = this.value;
+        } else {
+            operator = this.value;
+            resultText.innerHTML = operator;
+            }
+        })
+
     });
-});
 
 
-// equal value
-equal.addEventListener('click', function(){
-    resultValid();
-    if(operator === "+") {
-       result = parseInt(firstNum) + parseInt(secondNum);
-       resultText.innerHTML = result;
-    } else if (operator === "-") {
-        result = parseInt(firstNum) - parseInt(secondNum);
-        resultText.innerHTML = result;
-    } else if (operator === "/") {
-        result = parseInt(firstNum) / parseInt(secondNum);
-        resultText.innerHTML = result;
-    } else if (operator === "*") {
-        result = parseInt(firstNum) * parseInt(secondNum);
-    } else {
-        return
-    }
-});
+// equal value gives results
+equal.addEventListener('click', calculate);
 
 
 // clears values
@@ -73,6 +111,21 @@ clear.addEventListener('click', function(){
     secondNum = '';
     operator = '';
     resultText.innerHTML = result;
+});
+
+
+// backspace on current number or function
+deleted.addEventListener('click', function() {
+    if(firstNum !== '' && secondNum !== '' && operator !== '') {
+        secondNum = '';
+        resultText.innerHTML = secondNum;
+    } else if (firstNum !=='' && operator !== '') {
+        operator = '';
+        resultText.innerHTML = operator;
+    } else {
+        firstNum = '';
+        resultText.innerHTML = firstNum;
+    }
 });
 
 
