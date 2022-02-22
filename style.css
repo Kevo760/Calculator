@@ -26,7 +26,8 @@ h1 {
     font-size: 4rem;
     text-align: right;
     padding-top: 2rem;
-    padding-right: 1rem;
+    margin-right: 1rem;
+    overflow: hidden;
 }
 
 .calculator-box {
@@ -35,8 +36,8 @@ h1 {
     margin-right: auto;
     left: 0;
     right: 0;
-    width: 30rem;
-    height: 39rem;
+    width: 27rem;
+    height: 37rem;
     background-color: rgb(41,41,41);
     margin: 5rem auto;
     border-radius: 1em;
@@ -44,7 +45,7 @@ h1 {
 }
 
 .result-box {
-    width: 27rem;
+    width: 24rem;
     height: 8rem;
     background-color: white;
     display: block;
@@ -53,24 +54,44 @@ h1 {
 
 }
 
+
 /* ================================== BUTTONS ============================ */
 .btn {
+    margin-top: -2rem;
     padding: 1.5rem;
 }
 
 button {
-    width: 5.9rem;
+    width: 5.2rem;
     height: 4rem;
     margin: .3rem;
     font-size: 1.5rem;
+    border: none;
+    border-radius: .5rem;
+}
+
+button:hover {
+background-color: Gray;
 }
 
 .delete {
-    width: 12.7rem;
+    width: 11.25rem;
+    background-color: hsl(9, 100%, 64%);
+}
+
+.delete:hover {
+    background-color: hsl(9, 100%, 40%);
+    color: white;
 }
 
 .clear {
-    width: 12.7rem;
+    width: 11.25rem;
+    background-color: hsl(210, 100%, 56%);
+}
+
+.clear:hover {
+    background-color: hsl(210, 100%, 30%);
+    color: white;
 }
 
 

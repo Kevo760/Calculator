@@ -11,6 +11,7 @@ let secondNum = "";
 let operator = "";
 let result = "";
 let negNum = "";
+let re = /.00/g;
 
 
 // formula
@@ -18,14 +19,23 @@ function calculate() {
     if(operator === "+") {
        result = parseFloat(firstNum) + parseFloat(secondNum);
        result = Number.parseFloat(result).toFixed(2);
+       if(result.match(re)){
+        result = Number.parseFloat(result).toFixed(0);
+    };
        resultText.innerHTML = result;
     } else if (operator === "-") {
         result = parseFloat(firstNum) - parseFloat(secondNum);
         result = Number.parseFloat(result).toFixed(2);
+        if(result.match(re)){
+            result = Number.parseFloat(result).toFixed(0);
+        };
         resultText.innerHTML = result;
     } else if (operator === "/") {
         result = parseFloat(firstNum) / parseFloat(secondNum);
         result = Number.parseFloat(result).toFixed(2);
+        if(result.match(re)){
+            result = Number.parseFloat(result).toFixed(0);
+        };
         // if divided by second num display this error
         if(secondNum == 0) {
             result = "I'm broken :(";
@@ -34,12 +44,13 @@ function calculate() {
     } else if (operator === "*") {
         result = parseFloat(firstNum) * parseFloat(secondNum);
         result = Number.parseFloat(result).toFixed(2);
+        if(result.match(re)){
+            result = Number.parseFloat(result).toFixed(0);
+        };
         resultText.innerHTML = result;
     } else {
         return
     }
-
-    console.log(firstNum, operator, secondNum, result)
 };
 
 
@@ -49,26 +60,24 @@ numbers.forEach(number => {
     number.addEventListener('click', function() {
         
         // if operator is empty and first num is empty let num selected be first num
-        if(operator === '' && firstNum === '') {
+        if(operator == '') {
             firstNum += this.value;
             // if negNum is - add it to first num
             if(negNum == '-') {
                 firstNum = negNum + firstNum;
             };
             resultText.innerHTML = firstNum;
-
             // if there is an operator and result is empty let secondNum be selected num
-        } else if (operator !== '' && result == '') {
+        } else if (result == '') {
             secondNum += this.value;
             resultText.innerHTML = secondNum
-            // if result is not empty, let result be first num and second num this value
+            // if result is not empty, let result be first num and reset result to run secondNum
         } else {
             negNum = '';
             firstNum = '';
             secondNum = '';
             firstNum = result;
-            secondNum += this.value;
-            resultText.innerHTML = secondNum;
+            result = '';
         };
     });
 });
@@ -91,6 +100,7 @@ operators.forEach(operatorSel => {
             calculate();
             let operator = '';
             operator = this.value;
+            resultText.innerHTML = operator;
         } else {
             operator = this.value;
             resultText.innerHTML = operator;
@@ -129,3 +139,9 @@ deleted.addEventListener('click', function() {
 });
 
 
+
+// keyboard listner
+window.addEventListener('keydown', function(e){
+    const key = document.querySelector(`button[data-key='${e.keyCode}']`);
+    key.click();
+});
