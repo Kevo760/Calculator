@@ -50,7 +50,7 @@ function calculate() {
         resultText.innerHTML = result;
     } else {
         return
-    }
+    };   
 };
 
 
@@ -98,9 +98,9 @@ operators.forEach(operatorSel => {
         // then empty operator and replace operator with clicked operator
         } else if (operator !== '') {
             calculate();
-            let operator = '';
+            resultText.innerHTML = result;
+            operator = '';
             operator = this.value;
-            resultText.innerHTML = operator;
         } else {
             operator = this.value;
             resultText.innerHTML = operator;
