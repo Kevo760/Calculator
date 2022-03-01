@@ -101,6 +101,7 @@ operators.forEach(operatorSel => {
             resultText.innerHTML = result;
             operator = '';
             operator = this.value;
+            resultText.innerHTML = result + " " + operator;
         } else {
             operator = this.value;
             resultText.innerHTML = operator;
